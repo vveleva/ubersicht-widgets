@@ -1,0 +1,6 @@
+# Ignore other unneeded files.
+.DS_Store
+
+# Ignore tags directories
+**/tags
+.env.local
