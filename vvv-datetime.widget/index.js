@@ -1,9 +1,9 @@
-command: "date +%A,%b,%e,%Y,%l,%M,%p"
+command: "date +%A,%b,%e,%Y,%l,%M,%p",
 
-refreshFrequency: 5000
+refreshFrequency: 5000,
 
-style: """
-  /*COLORS*/
+style: `
+  // COLORS
   mainColor = #7077a9
   secondaryColor = #7077a9aa
   faintColor = #7077a933
@@ -45,26 +45,30 @@ style: """
 
   .ampm
     font-weight: 100
-"""
+ `,
 
-render: (output) -> "<div class='datetime-container'></div>"
+render: function () {
+  return "<div class='datetime-container'></div>"
+},
 
-update: (output) ->
-  renderDate = (output) ->
+update(output) {
+  renderDate = function (output) {
     [weekday, month, day, year, hour, minutes, ampm] = output.split(',')
-    """
+    return `
       <div class='current-time'>
-        #{hour}:#{minutes}<span class='ampm'>#{ampm}</span>
+        ${hour}:${minutes}<span class='ampm'>${ampm}</span>
       </div>
       <div class='date-container'>
         <div class='current-date'>
-          #{month} #{day}, #{year}
+          ${month} ${day}, ${year}
         </div>
         <div class='current-weekday'>
-          #{weekday}
+          ${weekday}
         </div>
       </div>
-    """
+    `
+  }
 
   $('.datetime-container').html(renderDate(output))
+}
 
