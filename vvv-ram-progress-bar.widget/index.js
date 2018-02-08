@@ -9,10 +9,10 @@ style: `
   statusColor = #7077a9aa
 
   bottom: 30px
-  right: 30px
+  right: 20px
   color: mainColor
   font-family: Helvetica Neue
-  width: 250px
+  width: 270px
   font-size: 12px
   text-shadow: 0 0 1px rgba(#000, 1)
 

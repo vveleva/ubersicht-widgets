@@ -12,9 +12,9 @@ style: `
   left: 30px
   color: mainColor
   font-family: Helvetica Neue
-  width: 250px
+  width: 270px
   font-size: 12px
-  # text-shadow: 0 0 1px rgba(#000, 1)
+  text-shadow: 0 0 1px rgba(#000, 1)
 
   .cpu
     font-weight: 500

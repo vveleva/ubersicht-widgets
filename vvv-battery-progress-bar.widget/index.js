@@ -9,12 +9,12 @@ style: `
     statusColor = #7077a9aa
 
     bottom: 200px
-    right: 30px
-    font-size: 12px
+    right: 20px
     color: mainColor
     font-family: Helvetica Neue
+    width: 270px
+    font-size: 12px
     text-shadow: 0 0 1px rgba(#000, 1)
-    width: 250px
 
     .battery
       font-weight: 500
