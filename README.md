@@ -16,3 +16,10 @@ Download widget and place it into `~/Library/Application\ Support/Übersicht/wid
   
 - DateTime widget
 <img width="400" alt="screenshot 2018-02-07 14 51 16" src="https://user-images.githubusercontent.com/508915/35945841-651c492e-0c16-11e8-983e-967c45e68108.png">
+
+
+## Appearance
+
+Change the **location** of the widgets by changing the first few lines of the `style` settings.
+
+Change the **colors** of the widgets by changing the CSS under `// COLORS` of the `style` settings.
