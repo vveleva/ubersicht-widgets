@@ -1,4 +1,4 @@
-command: "ps axo \"rss,pid,ucomm\" | sort -nr | tail +1 | head -n3 | awk '{printf \"%8.0f MB,%s,%s\\n\", $1/1024, $3, $2}'"
+command: "ps axo \"rss,pid,ucomm\" | sort -nr | tail +1 | head -n3 | awk '{printf \"%8.0f MB,%s,%s\\n\", $1/1024, $3, $2}' && system_profiler SPHardwareDataType | grep '  Memory:'"
 
 refreshFrequency: 5000
 
@@ -68,7 +68,9 @@ render: -> """
 """
 
 update: (output, domEl) ->
-  processes = output.split('\n')
+  processes = output.trim().split('\n')
+  memory = processes.pop().replace(/[a-zA-Z]|\s|:/g, '')
+  memory = parseInt(memory) * 1000 # convert to MB
   processesContainer = $(domEl).find('.processes-container')
 
   renderProcess = (cpu, name, pid) -> """
@@ -78,7 +80,7 @@ update: (output, domEl) ->
       </div>
       <div class='percent-bar--container'>
         <div class='percent-bar--border'>
-          <div class='percent-bar' style='width: #{parseInt(cpu) / 160.0}%'></div>
+          <div class='percent-bar' style='width: #{parseInt(cpu) / memory * 100.0 }%'></div>
         </div>
         <div class='percent-number'>
         #{cpu}
