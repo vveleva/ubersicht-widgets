@@ -3,50 +3,53 @@ command: "pmset -g batt | grep -o '[0-9]*%; [a-z]*'",
 refreshFrequency: 30000,
 
 style: `
-    // COLORS
-    mainColor = #7077a9
-    percentBorderColor = #7077a933
-    statusColor = #7077a9aa
+  // COLORS
+  mainColor = #7077a9
+  percentBorderColor = #7077a933
+  statusColor = #7077a9aa
 
-    bottom: 200px
-    right: 20px
-    color: mainColor
-    font-family: Helvetica Neue
-    width: 270px
-    font-size: 12px
-    text-shadow: 0 0 1px rgba(#000, 1)
+  mainColor = #eaeaea
+  percentBorderColor = #eaeaea33
+  statusColor = #eaeaeaaa
 
-    .battery
-      font-weight: 500
+  bottom: 30px
+  left: 30px
+  color: mainColor
+  font-family: Helvetica Neue
+  width: 270px
+  font-size: 12px
 
-    .percent-bar--container
-      display: flex
-      justify-context: space-between
-      align-items: center
+  .battery
+    font-weight: 500
 
-    .percent-bar--border
-      background-color: percentBorderColor
-      height: 8px
-      width: 200px
-      display: flex
-      justify-context: space-between
+  .percent-bar--container
+    display: flex
+    justify-context: space-between
+    align-items: center
 
-    .percent-bar
-      background-color: mainColor
+  .percent-bar--border
+    background-color: percentBorderColor
+    height: 8px
+    width: 200px
+    display: flex
+    justify-context: space-between
 
-    .percent-number
-      margin-left: 5px
+  .percent-bar
+    background-color: mainColor
 
-    .status
-      font-weight: normal
-      color statusColor
+  .percent-number
+    margin-left: 5px
+
+  .status
+    font-weight: normal
+    color statusColor
  `,
 
 render: function () {
   return `
     <div>
       <div class='battery'>
-        BATTERY <span class='status'>(<span class='status-input'></span>)</span>
+        BATTERY <span class='status' />
       </div>
       <div class='percent-bar--container'>
         <div class='percent-bar--border'>
@@ -64,7 +67,7 @@ update(output, domEl) {
   [percent, status] = output.split(";")
   domEl = $(domEl)
   domEl.find('.percent-input').html(percent)
-  domEl.find('.status-input').html(status)
+  domEl.find('.status').html(status == !!undefined ? '' : `(${status})`)
   domEl.find('.percent-bar').css('width', percent)
 }
 

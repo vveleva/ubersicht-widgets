@@ -1,6 +1,8 @@
-command: "ps axro \"%cpu,ucomm,pid\" | awk 'FNR>1' | tail +1 | head -n 3 | sed -e 's/^[ ]*\\([0-9][0-9]*\\.[0-9][0-9]*\\)\\ /\\1\\%\\,/g' -e 's/\\ \\ *\\([0-9][0-9]*$\\)/\\,\\1/g'",
+command: `
+2>/dev/null system_profiler SPBluetoothDataType | grep -E "Battery|Services" | sed "s/Services://g" | sed "s/Battery Level://g" | sed "s/Apple Wireless//g" | sed -e 's/^[ \t]*//' | paste -d" " - -
+`,
 
-refreshFrequency: 3000,
+refreshFrequency: 2000,
 
 style: `
   // COLORS
@@ -12,7 +14,7 @@ style: `
   percentBorderColor = #eaeaea33
   statusColor = #eaeaeaaa
 
-  top: 110px
+  bottom: 80px
   left: 30px
   color: mainColor
   font-family: Helvetica Neue
@@ -22,7 +24,7 @@ style: `
   .cpu
     font-weight: 500
 
-  .processes-container
+  .devices-container
     margin-top: 5px
 
   p
@@ -50,7 +52,7 @@ style: `
   .percent-number
     margin-left: 5px
 
-  .process-container
+  .device-container
     margin-bottom: 5px
 
   .status
@@ -61,41 +63,36 @@ style: `
 render: function () {
   return `
     <div class='container'>
-      <div class='cpu'>CPU</div>
-      <div class='processes-container'>
-        <div class='process1'></div>
-        <div class='process2'></div>
-        <div class='process3'></div>
-      </div>
+      <div class='cpu'>BLUETOOTH DEVICES</div>
+      <div class='devices-container'></div>
     </div>
   `
 },
 
 update(output, domEl) {
-  processes = output.trim().split('\n')
-  processesContainer = $(domEl).find('.processes-container')
+  devices = output.trim().split('\n')
+  devicesContainer = $(domEl).find('.devices-container')
+  pattern = /(.*?)(\d{1,3}%)/
 
-  renderProcess = function (cpu, name, pid) {
+  renderInfo = function (name, percent) {
     return `
-      <div class='process-container'>
-        <div class='process-name'>
-          ${name} <span class='status'>( PID: ${pid} )</span>
-        </div>
+      <div class='device-container'>
+        <div class='device-name'> ${name} </div>
         <div class='percent-bar--container'>
           <div class='percent-bar--border'>
-            <div class='percent-bar' style='width: ${cpu}'></div>
+            <div class='percent-bar' style='width: ${percent}'></div>
           </div>
-          <div class='percent-number'>
-          ${cpu}
-          </div>
+          <div class='percent-number'> ${percent} </div>
         </div>
       </div>
     `
   }
 
-  processes.forEach((process, i) => {
-    [cpu, name, pid] = process.split(',')
-    processesContainer.find(`.process${i+1}`).html(renderProcess(cpu, name, pid))
+  devicesContainer.empty()
+  devices.forEach((device, i) => {
+    if (device.match(pattern)) {
+      [match, name, percent] = device.match(pattern)
+      devicesContainer.append(renderInfo(name.trim(), percent))
+    }
   })
 }
-

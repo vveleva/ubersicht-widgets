@@ -8,13 +8,17 @@ style: `
   percentBorderColor = #7077a933
   statusColor = #7077a9aa
 
-  bottom: 30px
-  right: 20px
+  mainColor = #eaeaea
+  percentBorderColor = #eaeaea33
+  statusColor = #eaeaeaaa
+
+  top: 250px
+  left: 30px
   color: mainColor
   font-family: Helvetica Neue
   width: 270px
   font-size: 12px
-  text-shadow: 0 0 1px rgba(#000, 1)
+  // text-shadow: 0 0 1px rgba(#000, 1)
 
   .cpu
     font-weight: 500
@@ -94,7 +98,7 @@ update(output, domEl) {
 
   processes.forEach((process, i) => {
     [cpu, name, pid] = process.split(',')
-    processesContainer.find(`.process${i+1}`).html(renderProcess(cpu, name, pid))
+    processesContainer.find(`.process${i + 1}`).html(renderProcess(cpu, name, pid))
   })
 }
 

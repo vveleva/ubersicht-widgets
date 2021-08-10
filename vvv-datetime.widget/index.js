@@ -8,6 +8,10 @@ style: `
   secondaryColor = #7077a9aa
   faintColor = #7077a933
 
+  mainColor = #eaeaea
+  faintColor = #eaeaea33
+  secondaryColor = #eaeaeaaa
+
   size = 600px
   width: size
   margin-left: -0.5 * size
